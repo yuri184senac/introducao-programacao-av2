@@ -1,0 +1,5 @@
+package defa;
+
+public class Paciente {
+	private String id;
+}

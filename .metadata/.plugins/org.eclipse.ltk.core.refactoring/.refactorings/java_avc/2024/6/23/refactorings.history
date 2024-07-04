@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;JavaZap.ConfiConexao.java&apos; to &apos;ConfigConexao.java&apos;&#x0D;&#x0A;- Original project: &apos;java_avc&apos;&#x0D;&#x0A;- Original element: &apos;JavaZap.ConfiConexao.java&apos;&#x0D;&#x0A;- Renamed element: &apos;JavaZap.ConfigConexao.java&apos;" description="Rename compilation unit &apos;ConfiConexao.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;JavaZap{ConfiConexao.java" name="ConfigConexao.java" references="false" stamp="1717780161644" version="1.0"/>
+</session>

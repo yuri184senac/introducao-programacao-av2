@@ -1,0 +1,29 @@
+package orm.actions;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.time.LocalDate;
+import model.Paciente;
+
+public class InserirPaciente {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		LocalDate dataNascimento = LocalDate.of(2020, 10, 1);
+		Paciente paciente = new Paciente("James Silva", "joao.silva@example.com", "123.456.789-00", dataNascimento, "Brasileiro", "Rua das Flores, 123", "Hipertensão");
+		
+		 EntityManagerFactory factory = Persistence.createEntityManagerFactory("hospital");
+	     EntityManager manager = factory.createEntityManager();
+	     
+	     //3 Executar a operação
+	      manager.getTransaction().begin();
+	      manager.persist(paciente);
+	      manager.getTransaction().commit();
+	      System.out.println("Tarefa inserida, ID: " + paciente.getId());
+	      manager.clear();
+	      factory.close();
+	        
+	}
+
+}

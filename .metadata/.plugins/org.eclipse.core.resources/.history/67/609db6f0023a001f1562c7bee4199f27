@@ -1,0 +1,30 @@
+package prova;
+
+import java.time.LocalDate;
+import java.util.Date;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+public class main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		 // Example date
+		 LocalDate dataNascimento = LocalDate.of(2020, 10, 1);
+		
+		Transaction transaction = null;
+		try {
+			transaction = null;
+			Paciente paciente = new Paciente("João Silva", "joao.silva@example.com", "123.456.789-00", dataNascimento, "Brasileiro", "Rua das Flores, 123", "Hipertensão");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}  finally {
+         
+        }
+        
+		
+		
+	}
+
+}

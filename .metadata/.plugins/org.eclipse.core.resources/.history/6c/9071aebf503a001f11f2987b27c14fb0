@@ -1,0 +1,129 @@
+import java.time.LocalDate;
+import java.util.Scanner;
+
+import javax.management.Query;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import antlr.collections.List;
+import model.Aluno;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean continuar = true;
+
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("hospital");
+        EntityManager manager = factory.createEntityManager();
+
+        do {
+            System.out.println("======= Menu =======");
+            System.out.println("1. Cadastrar");
+            System.out.println("2. Buscar");
+            System.out.println("3. Atualizar");
+            System.out.println("4. Deletar");
+            System.out.println("0. Sair");
+            System.out.println("====================");
+            char opcao = scanner.next().charAt(0);
+
+            switch (opcao) {
+                case '1': // CREATE
+                    System.out.print("Digite o nome do aluno: ");
+                    String nome = scanner.next().toLowerCase();
+
+                    System.out.print("Digite o email do aluno: ");
+                    String email = scanner.next().toLowerCase();
+
+                    System.out.print("Digite o CPF do aluno: ");
+                    String cpf = scanner.next();
+
+                    System.out.print("Digite a data de nascimento do aluno (no formato yyyy-MM-dd): ");
+                    LocalDate dataNascimento = LocalDate.parse(scanner.next());
+
+                    System.out.print("Digite a naturalidade do aluno: ");
+                    String naturalidade = scanner.next().toLowerCase();
+
+                    System.out.print("Digite o endereço do aluno: ");
+                    String endereco = scanner.next().toLowerCase();
+
+                    Aluno aluno = new Aluno(nome, email, cpf, dataNascimento, naturalidade, endereco);
+
+                    manager.getTransaction().begin();
+                    manager.persist(aluno);
+                    manager.getTransaction().commit();
+
+                    System.out.println("Cadastro realizado, ID: " + aluno.getId());
+                    break;
+
+                case '2': // READ
+                    System.out.print("Insira o nome do aluno: ");
+                    String nomeBusca = scanner.next().toLowerCase();
+
+                    Query query = manager.createQuery("SELECT a FROM Aluno a WHERE LOWER(a.nome) LIKE :nome");
+                    query.setParameter("nome", nomeBusca + "%");
+
+                    List<Aluno> alunosEncontrados = query.getResultList();
+                    for (Aluno a : alunosEncontrados) {
+                        Aluno.exibirDadosAluno(a);
+                        System.out.println("==========================");
+                    }
+                    break;
+
+                case '3': // UPDATE
+                    System.out.print("Insira o ID do aluno que deseja atualizar: ");
+                    Long idAtualizar = scanner.nextLong();
+
+                    Aluno alunoAtualizar = manager.find(Aluno.class, idAtualizar);
+
+                    if (alunoAtualizar != null) {
+                        System.out.print("Digite a nova naturalidade do aluno: ");
+                        String novaNaturalidade = scanner.next().toLowerCase();
+                        alunoAtualizar.setNaturalidade(novaNaturalidade);
+
+                        manager.getTransaction().begin();
+                        manager.merge(alunoAtualizar);
+                        manager.getTransaction().commit();
+
+                        System.out.println("Aluno atualizado com sucesso: " + alunoAtualizar.getId());
+                    } else {
+                        System.out.println("Aluno não encontrado.");
+                    }
+                    break;
+
+                case '4': // DELETE
+                    System.out.print("Insira o ID do aluno que deseja deletar: ");
+                    Long idDeletar = scanner.nextLong();
+
+                    Aluno alunoDeletar = manager.find(Aluno.class, idDeletar);
+
+                    if (alunoDeletar != null) {
+                        manager.getTransaction().begin();
+                        manager.remove(alunoDeletar);
+                        manager.getTransaction().commit();
+
+                        System.out.println("Aluno removido com sucesso!");
+                    } else {
+                        System.out.println("Aluno não encontrado.");
+                    }
+                    break;
+
+                case '0': // EXIT
+                    continuar = false;
+                    break;
+
+                default:
+                    System.out.println("Opção inválida.");
+            }
+
+            manager.clear();
+
+        } while (continuar);
+
+        scanner.close();
+        manager.close();
+        factory.close();
+
+        System.out.println("Programa encerrado com sucesso.");
+    }

@@ -1,0 +1,118 @@
+package prova;
+
+import java.sql.Date;
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+public class Paciente {
+	 	@Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private int id;
+
+	    @Column(name = "nome", nullable = false)
+	    private String nome;
+
+	    @Column(name = "email", nullable = false)
+	    private String email;
+
+	    @Column(name = "cpf", nullable = false, unique = true)
+	    private String cpf;
+
+	    @Temporal(TemporalType.DATE)
+	    @Column(name = "data_nascimento", nullable = false)
+	    private LocalDate dataNascimento;
+
+	    @Column(name = "naturalidade", nullable = false)
+	    private String naturalidade;
+
+	    @Column(name = "endereco", nullable = false)
+	    private String endereco;
+
+	    @Column(name = "diagnostico", nullable = false)
+	    private String diagnostico;
+
+	    // Constructors, getters and setters
+
+	    public Paciente() {
+	    }
+
+	    public Paciente(String nome, String email, String cpf, Date dataNascimento, String naturalidade, String endereco, String diagnostico) {
+	        this.nome = nome;
+	        this.email = email;
+	        this.cpf = cpf;
+	        this.dataNascimento = dataNascimento;
+	        this.naturalidade = naturalidade;
+	        this.endereco = endereco;
+	        this.diagnostico = diagnostico;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getNaturalidade() {
+        return naturalidade;
+    }
+
+    public void setNaturalidade(String naturalidade) {
+        this.naturalidade = naturalidade;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getDiagnostico() {
+        return diagnostico;
+    }
+
+    public void setDiagnostico(String diagnostico) {
+        this.diagnostico = diagnostico;
+    }
+}

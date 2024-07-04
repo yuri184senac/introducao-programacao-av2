@@ -1,0 +1,5 @@
+package prova;
+
+public class Paciente {
+	private String id;
+}

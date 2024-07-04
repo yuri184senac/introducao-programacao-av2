@@ -1,0 +1,17 @@
+package prova;
+
+import java.util.Date;
+
+public class main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		 // Example date
+        LocalDate dataNascimento = new Date(20, 10, 1); // Note: Deprecated constructor, use Calendar or LocalDate in real applications
+
+        Paciente paciente = new Paciente("João Silva", "joao.silva@example.com", "123.456.789-00", dataNascimento, "Brasileiro", "Rua das Flores, 123", "Hipertensão");
+		
+		
+	}
+
+}

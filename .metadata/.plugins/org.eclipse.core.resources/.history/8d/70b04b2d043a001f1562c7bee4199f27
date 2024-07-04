@@ -1,0 +1,12 @@
+package orm.actions;
+
+import model.Paciente;
+
+public class InserirPaciente {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Paciente paciente = new Paciente();
+	}
+
+}

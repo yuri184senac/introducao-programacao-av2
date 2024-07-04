@@ -1,0 +1,112 @@
+
+
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import model.Paciente;
+
+public class main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		 // Example date
+		Scanner scanner = new Scanner(System.in);
+		boolean cutout = true;
+		int menu;
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("hospital");
+	    EntityManager manager = factory.createEntityManager();
+	    
+		do {			
+			System.out.println("======= Menu =======");
+	        System.out.println("1. Cadastrar");
+	        System.out.println("2. Buscar");
+	        System.out.println("3. Atualizar");
+	        System.out.println("4. Deletar");
+	        System.out.println("0. Sair");
+	        System.out.println("====================");
+	        menu = scanner.nextInt();
+	        
+	        switch(menu) {	     
+			
+				//CREATE
+	        	case 1:	        		   
+	                System.out.println("Digite o nome do paciente:");
+	                String nome = scanner.nextLine();
+
+	                System.out.println("Digite o email do paciente:");
+	                String email = scanner.nextLine();
+
+	                System.out.println("Digite o CPF do paciente:");
+	                String cpf = scanner.nextLine();
+
+	                System.out.println("Digite a data de nascimento do paciente (no formato yyyy-MM-dd):");
+	                LocalDate dataNascimento = LocalDate.parse(scanner.nextLine());
+
+	                System.out.println("Digite a nacionalidade do paciente:");
+	                String nacionalidade = scanner.nextLine();
+
+	                System.out.println("Digite o endereço do paciente:");
+	                String endereco = scanner.nextLine();
+
+	                System.out.println("Digite a condição médica do paciente:");
+	                String condicaoMedica = scanner.nextLine();	        		
+
+	                Paciente paciente = new Paciente(nome, email, cpf, dataNascimento, nacionalidade, endereco, condicaoMedica);
+
+	        		 manager.getTransaction().begin();
+	       	      	 manager.persist(paciente);
+	       	      	 manager.getTransaction().commit();
+	       	      	 System.out.println("Tarefa inserida, ID: " + paciente.getId());
+	       	      	 manager.clear();
+	       	      	 manager.close();
+	        		break;
+	        	//READ
+	        	case 2:
+        			String sql = "SELECT p FROM Paciente p WHERE p.nome LIKE :letraInicial";	        	     
+        		 	System.out.print("Insira o nome do paciente: ");
+        		 	String inicial = scanner.next();
+        	        Query query = manager.createQuery(sql);
+        	        query.setParameter("letraInicial", inicial + "%");        	        	
+        	        List<Paciente> listaPacientes = query.getResultList();
+    	        	for (Paciente paciente1 : listaPacientes){
+    	        		System.out.println(paciente1.getNome());
+        	        }	
+	        		break;
+	        	//UPDATE
+	        	case 3:
+	        		break;
+	        	//DELETE
+	        		
+	        	case 4:
+	        		//2. Buscar o objeto
+	                Paciente paciente1 =  new Paciente();
+	                paciente1.setId(1L);
+	                paciente1 = manager.find(Paciente.class, paciente1.getId());
+
+	                //3. Operar com "Remover"
+	                manager.getTransaction().begin();
+	                manager.remove(paciente1);
+	                manager.getTransaction().commit();
+	                System.out.println("Paciente removido");
+	        		break;
+	        	//EXIT
+	        	case 0:
+	        		cutout = false;
+	        		factory.close();
+	        		break;
+			}
+		} while(cutout);
+		 scanner.close();		        		
+	}
+
+}

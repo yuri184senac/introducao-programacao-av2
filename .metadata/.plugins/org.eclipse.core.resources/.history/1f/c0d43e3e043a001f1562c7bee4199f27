@@ -1,0 +1,23 @@
+package orm.actions;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import model.Paciente;
+
+public class InserirPaciente {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		Paciente paciente = new Paciente();
+		
+		 EntityManagerFactory factory = Persistence.createEntityManagerFactory("tarefas");
+	     EntityManager manager = factory.createEntityManager();
+	     
+	     //3 Executar a operação
+	        manager.getTransaction().begin();
+	}
+
+}
